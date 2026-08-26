@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+⚡ NexLine Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> React-based customer portal and admin dashboard for the NexLine queue management platform.
 
-## Available Scripts
+![React](https://img.shields.io/badge/React-18-blue)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+📌 What This Does
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Two interfaces in one React app:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Customer Portal** (`/`)
+- Select service type (Billing, Consultation, Pharmacy)
+- Enter name and phone number
+- Get a digital token with AI-predicted wait time
+- Live queue position updates via WebSocket — no page refresh needed
 
-### `npm test`
+**Admin Dashboard** (`/admin`)
+- JWT-based login for ADMIN/STAFF accounts
+- Counter management — view active counters and service assignments
+- Call next token with one click
+- Complete or skip tokens
+- Real-time status updates
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+🚀 Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# Install dependencies
+npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Start development server
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Visit `http://localhost:3000` for customer portal
+Visit `http://localhost:3000/admin` for admin dashboard
 
-### `npm run eject`
+**Requires** the NexLine backend running on `localhost:8080`
+and the AI service running on `localhost:8000`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Default admin credentials:**
+- Phone: `9999999999`
+- Password: `admin123`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+🛠️ Tech Stack
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+| Library | Purpose |
+|---------|---------|
+| React 18 | UI framework |
+| React Router | Page routing |
+| Axios | HTTP client (with JWT interceptor) |
+| STOMP.js | WebSocket client |
+| SockJS | WebSocket fallback |
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+📁 Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+src/
+├── api/
+│ └── api.js # All API calls + JWT interceptor
+├── pages/
+│ ├── CustomerPage.js # Token generation + live status
+│ └── AdminPage.js # Login + counter management
+├── components/
+│ ├── TokenCard.js # Token display card
+│ ├── QueueStatus.js # Live queue position (WebSocket)
+│ └── CounterPanel.js # Admin counter controls
+└── App.js # Router setup
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+🔗 Part of NexLine
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Repo | Description |
+|------|-------------|
+| [nexline-backend](https://github.com/yashovardhan2964/nexline-backend) | Spring Boot core backend |
+| [nexline-ai](https://github.com/yashovardhan2964/nexline-ai) | Python FastAPI ML microservice |
+| **nexline-frontend** | This repo — React UI |

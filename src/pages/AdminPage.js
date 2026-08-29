@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';import { login, getCounters, callNextToken, completeToken } from '../api/api';
+import React, { useState, useEffect, useCallback } from 'react';
+import { login, getCounters, callNextToken, completeToken } from '../api/api';
 import CounterPanel from '../components/CounterPanel';
 
 function AdminPage() {
@@ -15,23 +16,30 @@ function AdminPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
-    // Load counters when logged in
-   useEffect(() => {
-    if (isLoggedIn) {
-        fetchCounters();
-    }
-}, [isLoggedIn, fetchCounters]); // add fetchCounters here
+    // Define handleLogout first since fetchCounters uses it
+    const handleLogout = () => {
+        localStorage.removeItem('nexline_token');
+        setIsLoggedIn(false);
+    };
 
-  const fetchCounters = useCallback(async () => {
-    try {
-        const res = await getCounters();
-        setCounters(res.data);
-    } catch (err) {
-        if (err.response?.status === 403) {
-            handleLogout();
+    // Define fetchCounters before useEffect
+    const fetchCounters = useCallback(async () => {
+        try {
+            const res = await getCounters();
+            setCounters(res.data);
+        } catch (err) {
+            if (err.response?.status === 403) {
+                handleLogout();
+            }
         }
-    }
-}, []); // empty deps since it doesn't depend on state
+    }, []);
+
+    // Now useEffect can safely reference fetchCounters
+    useEffect(() => {
+        if (isLoggedIn) {
+            fetchCounters();
+        }
+    }, [isLoggedIn, fetchCounters]);
 
     const handleLogin = async () => {
         if (!phone || !password) {
@@ -46,11 +54,6 @@ function AdminPage() {
         } catch (err) {
             setAuthError('Invalid credentials');
         }
-    };
-
-    const handleLogout = () => {
-        localStorage.removeItem('nexline_token');
-        setIsLoggedIn(false);
     };
 
     const handleCallNext = async (counterId) => {
@@ -155,7 +158,6 @@ function AdminPage() {
             </nav>
 
             <div className="page-container">
-                {/* Status message */}
                 {message && (
                     <div className={`alert ${message.startsWith('✅')
                         ? 'alert-success' : 'alert-error'}`}>
@@ -163,7 +165,6 @@ function AdminPage() {
                     </div>
                 )}
 
-                {/* Counters section */}
                 <h2 style={{ marginBottom: '1rem', color: '#1a1a2e' }}>
                     Counter Management
                 </h2>
@@ -171,7 +172,7 @@ function AdminPage() {
                 {counters.length === 0 ? (
                     <div className="card">
                         <p style={{ color: '#666', textAlign: 'center' }}>
-                            No counters found. Add counters to get started.
+                            No counters found.
                         </p>
                     </div>
                 ) : (
@@ -179,26 +180,3 @@ function AdminPage() {
                         {counters.map(counter => (
                             <CounterPanel
                                 key={counter.id}
-                                counter={counter}
-                                onCallNext={handleCallNext}
-                                onComplete={handleComplete}
-                                loading={loading}
-                            />
-                        ))}
-                    </div>
-                )}
-
-                {/* Refresh button */}
-                <button
-                    className="btn btn-primary"
-                    style={{ marginTop: '1rem' }}
-                    onClick={fetchCounters}
-                >
-                    🔄 Refresh
-                </button>
-            </div>
-        </div>
-    );
-}
-
-export default AdminPage;

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { login, getCounters, callNextToken, completeToken } from '../api/api';
+import React, { useState, useEffect, useCallback } from 'react';import { login, getCounters, callNextToken, completeToken } from '../api/api';
 import CounterPanel from '../components/CounterPanel';
 
 function AdminPage() {
@@ -17,22 +16,22 @@ function AdminPage() {
     const [message, setMessage] = useState('');
 
     // Load counters when logged in
-    useEffect(() => {
-        if (isLoggedIn) {
-            fetchCounters();
-        }
-    }, [isLoggedIn]);
+   useEffect(() => {
+    if (isLoggedIn) {
+        fetchCounters();
+    }
+}, [isLoggedIn, fetchCounters]); // add fetchCounters here
 
-    const fetchCounters = async () => {
-        try {
-            const res = await getCounters();
-            setCounters(res.data);
-        } catch (err) {
-            if (err.response?.status === 403) {
-                handleLogout();
-            }
+  const fetchCounters = useCallback(async () => {
+    try {
+        const res = await getCounters();
+        setCounters(res.data);
+    } catch (err) {
+        if (err.response?.status === 403) {
+            handleLogout();
         }
-    };
+    }
+}, []); // empty deps since it doesn't depend on state
 
     const handleLogin = async () => {
         if (!phone || !password) {

@@ -56,7 +56,6 @@ function CustomerPage() {
 
     return (
         <div className="app">
-            {/* Navbar */}
            <nav className="navbar">
     <h1>⚡ NexLine</h1>
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -64,7 +63,7 @@ function CustomerPage() {
             Smart Queue Application
         </span>
         
-            href="/admin"
+            <a> href="/admin"
             style={{
                 color: '#00d4ff',
                 textDecoration: 'none',
@@ -73,7 +72,7 @@ function CustomerPage() {
                 borderRadius: '6px',
                 fontSize: '0.85rem'
             }}
-        
+        >
             Admin →
         </a>
     </div>

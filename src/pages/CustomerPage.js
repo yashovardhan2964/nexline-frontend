@@ -73,7 +73,7 @@ function CustomerPage() {
                 borderRadius: '6px',
                 fontSize: '0.85rem'
             }}
-        >
+        
             Admin →
         </a>
     </div>

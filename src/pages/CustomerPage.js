@@ -57,12 +57,27 @@ function CustomerPage() {
     return (
         <div className="app">
             {/* Navbar */}
-            <nav className="navbar">
-                <h1>⚡ NexLine</h1>
-                <span style={{ color: '#00d4ff', fontSize: '0.9rem' }}>
-                    Smart Queue Application
-                </span>
-            </nav>
+           <nav className="navbar">
+    <h1>⚡ NexLine</h1>
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <span style={{ color: '#00d4ff', fontSize: '0.9rem' }}>
+            Smart Queue Application
+        </span>
+        
+            href="/admin"
+            style={{
+                color: '#00d4ff',
+                textDecoration: 'none',
+                border: '1px solid #00d4ff',
+                padding: '0.3rem 0.8rem',
+                borderRadius: '6px',
+                fontSize: '0.85rem'
+            }}
+        >
+            Admin →
+        </a>
+    </div>
+</nav>
 
             <div className="page-container" style={{ maxWidth: '600px' }}>
 

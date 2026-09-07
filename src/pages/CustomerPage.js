@@ -56,6 +56,7 @@ function CustomerPage() {
 
     return (
         <div className="app">
+            {/* Navbar */}
            <nav className="navbar">
     <h1>⚡ NexLine</h1>
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -72,7 +73,7 @@ function CustomerPage() {
                 borderRadius: '6px',
                 fontSize: '0.85rem'
             }}
-        >
+        
             Admin →
         </a>
     </div>
